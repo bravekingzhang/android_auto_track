@@ -1,8 +1,17 @@
 # Android_auto_track
 Android字节码插件，编译期间动态修改代码，实现自动埋点
 
+实现效果截图：
 
-#### 根据![luffy](https://github.com/JieYuShi/Luffy) 项目更改，是接入简化了。
+#### 编译插装效果
+
+![](http://snpy.in/9pG1g4)
+
+#### 运行效果
+![](http://snpy.in/uySnPp)
+
+
+#### 根据[Luffy](https://github.com/JieYuShi/Luffy) 项目更改，是接入简化了。
 
 ##### 接入步骤
 
@@ -44,7 +53,7 @@ implementation 'com.tencent.tip:autotrackhelper:1.0.1-SNAPSHOT'
 
 
 
-##### 原理了解，建议参考 ![Luffy](https://github.com/JieYuShi/Luffy)
+##### 原理了解，建议参考 [Luffy](https://github.com/JieYuShi/Luffy)
 
 
 
