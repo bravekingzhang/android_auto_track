@@ -10,4 +10,16 @@ build
 *.apk
 *.iml
 gradle.properties
-snapshotRepo/
+.DS_Store
+
+bak/
+bin/
+install_download/
+codecc-build_kw.sh
+*.pyc
+.idea/caches/gradle_models.ser
+.idea/json2java.xml
+autotrackhelper/libs/
+autotrackhelper/src/main/res/drawable/
+plugin/build/
+snapshotRepo/com/
