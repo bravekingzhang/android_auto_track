@@ -53,8 +53,7 @@ public class AutoTransform extends Transform {
         println()
         println '#######################################################################'
         println '##########                                                    '
-        println '##########         欢迎使用 王者人生 (' + VERSION + ')无埋点编译插件'
-        println '##########           使用过程中碰到任何问题请联系igame_helper          '
+        println '##########         欢迎使用 Luffy (' + VERSION + ')无埋点编译插件'
         println '##########                                                    '
         println '#######################################################################'
         println '##########                                                    '

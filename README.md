@@ -1,147 +1,52 @@
-# Luffy
-Android字节码插件，编译期间动态修改代码
+# Android_auto_track
+Android字节码插件，编译期间动态修改代码，实现自动埋点
 
 
-### 1、更新日志
+#### 根据![luffy](https://github.com/JieYuShi/Luffy) 项目更改，是接入简化了。
 
-###### 2018.12.07更新
-参考神策的全埋点日志SDK,进行功能重构扩展完善,以方便正式应用到线上应用
+##### 接入步骤
 
-1、针对日志采集的全埋点对各个常见十多种控件进行埋点监听及处理(AutoTrackHelper类)
-- onFragmentViewCreated
-- trackFragmentResume
-- trackFragmentSetUserVisibleHint
-- trackOnHiddenChanged
-- trackFragmentAppViewScreen
-- trackExpandableListViewOnGroupClick
-- trackExpandableListViewOnChildClick
-- trackListView
-- trackTabHost
-- trackTabLayoutSelected
-- trackMenuItem
-- trackRadioGroup
-- trackDialog
-- trackDrawerOpened
-- trackDrawerClosed
-- trackViewOnClick
-- trackViewOnClick
+我这里也没有上传到公网的maven上去，只是上传到公司maven了，如果有兴趣的同学可以上传一下，不上传也可以打包到本地使用。
 
-2、可以在build.gradle进行多个自定义插桩配置
+1、在根工程引入插件到工程中
 
-3、针对埋点控件及自定义配置功能的logapp测试应用
+```
+buildscript {
 
+    repositories {
+        maven {
+            url "http://maven.oa.com/nexus/content/groups/androidbuild"
+        }
+        maven {
+            url uri('./snapshotRepo')
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.tencent.tip:autotrack-gradle-plugin:1.0.3-SNAPSHOT'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
 
-###### 2018.03.28更新
-插件扩展，新增自动埋点实战功能
-2018.03.28更新 插件扩展，新增自动埋点实战功能
-- View的onClick(View v)方法
-- Fragment的onResume()方法
-- Fragment的onPause()方法
-- Fragment的setUserVisibleHint(boolean b)方法
-- Fragment的onHiddenChanged(boolean b)方法
-- 在app的module中手动设置的监听条件：指定方法或注解方法
+```
 
-### 2、使用步骤
+2、在你的app项目中引入帮助库
+```
+implementation 'com.tencent.tip:autotrackhelper:1.0.1-SNAPSHOT'
+```
 
-要是使用演示的话，因为还没上传到jcenter库，所以只能本地仓库打包插件，记得要先把依赖都注释掉，插件打包完成后再启用，不然会编译不过去的。
+3、copy配置文件`autotract.gradle`到你的app项目中，搞定，记得在你的app的gradle文件末尾加上一句`apply from: 'autotract.gradle`
 
-本地打包及使用步骤:
-- 2.1、AndroidStudio右侧Gradle->:plugin->upload->uploadArchives,打包成功会在项目目录snapshotRepo中
-- 2.2、根build.gradle添加插件
- ```
- dependencies {
-     classpath 'oms.mmc:autotrack-gradle-plugin:1.0.0-SNAPSHOT'
- }
- ```
-- 3、app的build.gradle中进行配置
+##### 上报埋点接口
 
- ```
- apply plugin: 'oms.mmc.autotrack'
-
- xiaoqingwa {
-     // 是否打印日志
-     isDebug = true
-     // 是否打开SDK的日志全埋点采集
-     isOpenLogTrack = true
-     // 支持自定义配置,可选
-     matchData = [[
-                          //方法的匹配，可以通过类名或者实现的接口名匹配
-                          'ClassName'    : 'com.mmc.lamandys.liba_datapick.Counter2',
-                          'InterfaceName': '',
-                          'MethodName'   : 'test2',
-                          'MethodDes'    : '(Landroid/view/View;)V',
-                          'isAnnotation' : true,
-                          //插入的字节码，方法的执行顺序visitAnnotation->onMethodEnter->onMethodExit
-                          'MethodVisitor': {
-                              MethodVisitor methodVisitor, int access, String name, String desc ->
-                                  MethodVisitor adapter = new AutoMethodVisitor(methodVisitor, access, name, desc) {
-                                      boolean isAnnotation = false
-
-                                      @Override
-                                      protected void onMethodExit(int opcode) {
-                                          super.onMethodExit(opcode)
-                                          //使用注解找对应方法的时候得加这个判断
-                                          if (!isAnnotation) {
-                                              return
-                                          }
-                                          // INVOKESTATIC
-                                          methodVisitor.visitMethodInsn(184, "com/mmc/lamandys/liba_datapick/AutoHelper", "onClick2", "()V", false)
-                                      }
-
-                                      /**
-                                       * 需要通过注解的方式加字节码才会重写这个方法来进行条件过滤
-                                       */
-                                      @Override
-                                      AnnotationVisitor visitAnnotation(String des, boolean visible) {
-                                          if (des == 'Lcom/xishuang/annotation/AutoCount;') {
-                                              println "注解匹配：" + des
-                                              isAnnotation = true
-                                          }
-                                          return super.visitAnnotation(des, visible)
-                                      }
-                                  }
-                                  return adapter
-                          }
-                  ],
-                  [
-                          //方法的匹配，可以通过类名或者实现的接口名匹配
-                          'ClassName'    : 'com.mmc.lamandys.liba_datapick.Counter',
-                          'InterfaceName': '',
-                          'MethodName'   : 'test',
-                          'MethodDes'    : '()V',
-                          'isAnnotation' : false,
-                          //插入的字节码，方法的执行顺序visitAnnotation->onMethodEnter->onMethodExit
-                          'MethodVisitor': {
-                              MethodVisitor methodVisitor, int access, String name, String desc ->
-                                  MethodVisitor adapter = new AutoMethodVisitor(methodVisitor, access, name, desc) {
-
-                                      @Override
-                                      protected void onMethodEnter() {
-                                          super.onMethodEnter()
-                                      }
-
-                                      @Override
-                                      protected void onMethodExit(int opcode) {
-                                          super.onMethodExit(opcode)
-                                          // INVOKESTATIC
-                                          methodVisitor.visitMethodInsn(INVOKESTATIC, "com/mmc/lamandys/liba_datapick/AutoHelper", "onClick3", "()V", false)
-                                      }
-                                  }
-                                  return adapter
-                          }
-                  ]
-     ]
- }
- ```
+上报埋点接口我放在了帮助库`autotrackhelper`中,自己实现自己的`TrackInfoUploader`将信息上报到你的后台，进行统计即可。
 
 
- - 2.4、```Clean Project```打包应用
 
- 在logapp->build->intermediates->transforms->AutoTrack->debug中可查看插桩后的类文件:![插桩类文件](https://github.com/JieYuShi/Luffy/blob/master/img/after_autotrack.png)
+##### 原理了解，建议参考 ![Luffy](https://github.com/JieYuShi/Luffy)
 
- 具体编译的字节码可查看编译日志:![编译日志](https://github.com/JieYuShi/Luffy/blob/master/img/bulid_log.png)
 
- 具体采集后的日志及处理可看应用日志:![应用日志](https://github.com/JieYuShi/Luffy/blob/master/img/app_log1.png)
- ![应用日志规范后效果](https://github.com/JieYuShi/Luffy/blob/master/img/app_log2.png)
+
 
 
