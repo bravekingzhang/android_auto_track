@@ -55,7 +55,7 @@ if (uploadLocal) {
         repositories {
             mavenDeployer {
                 repository(url: 'http://maven.oa.com/nexus/content/repositories/thirdparty-snapshots') {
-                    authentication(userName: 'rdm', password: 'rdm')
+                    authentication(userName: 'xx', password: 'xx')
                     pom.groupId = groupId
                     pom.artifactId = artifactId
                     pom.version = version
