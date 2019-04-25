@@ -5,10 +5,10 @@ Android字节码插件，编译期间动态修改代码，实现自动埋点
 
 #### 编译插装效果
 
-![](http://snpy.in/9pG1g4)
+![](https://github.com/bravekingzhang/android_auto_track/blob/master/compile.jpg)
 
 #### 运行效果
-![](http://snpy.in/uySnPp)
+![](https://github.com/bravekingzhang/android_auto_track/blob/master/runtime.jpg)
 
 
 #### 根据[Luffy](https://github.com/JieYuShi/Luffy) 项目更改，是接入简化了。
