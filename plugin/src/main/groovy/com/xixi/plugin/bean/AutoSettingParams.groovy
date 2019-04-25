@@ -5,7 +5,7 @@ package com.xixi.plugin.bean
  */
 public class AutoSettingParams {
 
-    String name = 'Luffy字节码插件'
+    String name = '字节码插件'
     /**
      * 是否是Debug模式进行日志打印
      */
@@ -17,8 +17,12 @@ public class AutoSettingParams {
     /**
      * 用户自定义功能
      */
-//    List<Map<String, Object>> matchData = [[:]]
     List<Map<String, Object>> matchData = new ArrayList<>()
+
+    /**
+     * 自动埋点帮助类文件
+     */
+    String log_analytics_base = ''
     /**
      * 需要手动过滤的包
      */

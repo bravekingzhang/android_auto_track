@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Luffy.iml" filepath="$PROJECT_DIR$/.idea/Luffy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/annotation/annotation.iml" filepath="$PROJECT_DIR$/annotation/annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Luffy.iml" filepath="$PROJECT_DIR$/Luffy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/autotrackhelper/autotrackhelper.iml" filepath="$PROJECT_DIR$/autotrackhelper/autotrackhelper.iml" />
       <module fileurl="file://$PROJECT_DIR$/logapp/logapp.iml" filepath="$PROJECT_DIR$/logapp/logapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/plugin/plugin.iml" filepath="$PROJECT_DIR$/plugin/plugin.iml" />
     </modules>

@@ -6,7 +6,6 @@ import com.android.build.api.transform.*
 import com.android.build.gradle.internal.pipeline.TransformManager
 import com.xixi.plugin.GlobalConfig
 import com.xixi.plugin.util.AutoMatchUtil
-import com.xixi.plugin.util.LogAnalyticsUtil
 import com.xixi.plugin.bean.AutoClassFilter
 import com.xixi.plugin.util.AutoTextUtil
 import com.xixi.plugin.util.Logger
@@ -25,7 +24,7 @@ import java.util.zip.ZipEntry
  */
 public class AutoTransform extends Transform {
 
-    private static final String VERSION = "v1.0.2"
+    private static final String VERSION = "v1.0.0"
 
     @Override
     String getName() {
@@ -50,12 +49,12 @@ public class AutoTransform extends Transform {
     /**
      * 打印提示信息
      */
-    static void printCopyRight() {
+    static void printConfigInfo() {
         println()
         println '#######################################################################'
         println '##########                                                    '
-        println '##########         欢迎使用 Luffy® (' + VERSION + ')无埋点编译插件'
-        println '##########           使用过程中碰到任何问题请联系数据中心          '
+        println '##########         欢迎使用 王者人生 (' + VERSION + ')无埋点编译插件'
+        println '##########           使用过程中碰到任何问题请联系igame_helper          '
         println '##########                                                    '
         println '#######################################################################'
         println '##########                                                    '
@@ -97,7 +96,7 @@ public class AutoTransform extends Transform {
         /**
          * 打印提示信息
          */
-        printCopyRight()
+        printConfigInfo()
 
         //开始计算消耗的时间
         Logger.info("||=======================================================================================================")
@@ -177,7 +176,6 @@ public class AutoTransform extends Transform {
     private static File modifyJarFile(File jarFile, File tempDir) {
         if (jarFile) {
             return modifyJar(jarFile, tempDir, true)
-
         }
         return null
     }
@@ -284,6 +282,7 @@ public class AutoTransform extends Transform {
             input.jarInputs.each { JarInput jarInput ->
                 classPaths.add(jarInput.file.absolutePath)
                 Logger.info("||项目jar包：${jarInput.file.absolutePath}")
+                Logger.info("||项目jar包 jar包内的东东不会被自动埋点")
             }
         }
     }

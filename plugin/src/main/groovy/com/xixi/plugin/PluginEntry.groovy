@@ -17,18 +17,24 @@ class PluginEntry implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        project.extensions.create('xiaoqingwa', AutoSettingParams)
+        project.extensions.create('auto_tract', AutoSettingParams)
         GlobalConfig.setProject(project)
         println(GlobalConfig.getParams().name)
+        if (!GlobalConfig.getParams().log_analytics_base.isEmpty()){
+            println("设置自动埋点工具类："+GlobalConfig.getParams().log_analytics_base)
+            LogHookConfig.LOG_ANALYTICS_BASE = GlobalConfig.getParams().log_analytics_base
+        }else{
+            println("默认自动埋点工具类："+LogHookConfig.LOG_ANALYTICS_BASE)
+        }
 
         //使用Transform实行遍历
         def android = project.extensions.getByType(AppExtension)
         registerTransform(android)
 
         project.afterEvaluate {
-            Logger.setDebug(project.xiaoqingwa.isDebug)
+            Logger.setDebug(project.auto_tract.isDebug)
             // 用户配置解析
-            analysiUserConfig()
+            analyseUserConfig()
         }
     }
 
@@ -40,7 +46,7 @@ class PluginEntry implements Plugin<Project> {
     /**
      * 对build.gradle配置参数及自定义内容进行解析
      */
-    static void analysiUserConfig() {
+    static void analyseUserConfig() {
 
         List<Map<String, Object>> matchDataList = GlobalConfig.getParams().matchData
         List<AutoClassFilter> autoClassFilterList = new ArrayList<>()

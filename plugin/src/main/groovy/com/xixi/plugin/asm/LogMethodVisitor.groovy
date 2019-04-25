@@ -44,7 +44,7 @@ public class LogMethodVisitor extends AdviceAdapter {
     void visitEnd() {
         super.visitEnd()
         if (isHasTracked) {
-            visitAnnotation("Lcom/mmc/lamandys/liba_datapick/AutoDataInstrumented;", false)
+            visitAnnotation("Lcom/brzhang/autotrackhelper/AutoDataInstrumented;", false)
             Logger.info("||Hooked method: ${methodName}${methodDesc}")
         }
         Logger.info("||结束扫描方法：${methodName}")
@@ -180,7 +180,12 @@ public class LogMethodVisitor extends AdviceAdapter {
         }
     }
 
-    /**
+    @Override
+    protected void onMethodExit(int opcode) {
+        super.onMethodExit(opcode)
+    }
+
+/**
      * 该方法是当扫描器扫描到类注解声明时进行调用
      * @param s 注解的类型。它使用的是（“L” + “类型路径” + “;”）形式表述
      * @param b 表示的是，该注解是否在 JVM 中可见
@@ -191,17 +196,17 @@ public class LogMethodVisitor extends AdviceAdapter {
      */
     @Override
     AnnotationVisitor visitAnnotation(String s, boolean b) {
-        if (s == 'Lcom/mmc/lamandys/liba_datapick/AutoTrackDataViewOnClick;') {
+        if (s == 'Lcom/brzhang/autotrackhelper/AutoTrackDataViewOnClick;') {
             isAutoTrackViewOnClickAnnotation = true
             Logger.info("||发现 ${methodName}${methodDesc} 有注解 @AutoTrackDataViewOnClick")
         }
 
-        if (s == 'Lcom/mmc/lamandys/liba_datapick/AutoIgnoreTrackDataOnClick;') {
+        if (s == 'Lcom/brzhang/autotrackhelper/AutoIgnoreTrackDataOnClick;') {
             isAutoTrackIgnoreTrackOnClick = true
             Logger.info("||发现 ${methodName}${methodDesc} 有注解 @AutoIgnoreTrackDataOnClick")
         }
 
-        if (s == 'Lcom/mmc/lamandys/liba_datapick/AutoDataInstrumented;') {
+        if (s == 'Lcom/brzhang/autotrackhelper/AutoDataInstrumented;') {
             isHasInstrumented = true
         }
 

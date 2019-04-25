@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-
 import com.mmc.lamandys.liba_datapick.R;
-import com.mmc.lamandys.liba_datapick.core.AutoTrackUtil;
-
+import com.mmc.lamandys.liba_datapick.annotation.AutoCount;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {
@@ -17,6 +15,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     Button jumpButton;
 
     @Override
+    @AutoCount
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -30,10 +29,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
+    @AutoCount
     public void onClick(View v) {
         if (v.getId() == R.id.jumpButton) {
             startActivity(new Intent(this, SecondActivity.class));
-            System.out.println("自动埋点:" + AutoTrackUtil.traverseViewOnly(jumpButton));
         } else if (v.getId() == R.id.tabButton) {
             startActivity(new Intent(this, TabActivity.class));
         } else if (v.getId() == R.id.toolbarBotton) {
@@ -44,8 +43,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             startActivity(new Intent(this, DrawerActivity.class));
         }
     }
-
-
 
     @Override
     protected void onDestroy() {

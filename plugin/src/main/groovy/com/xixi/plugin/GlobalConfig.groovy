@@ -23,7 +23,7 @@ public class GlobalConfig {
     }
 
     static AutoSettingParams getParams() {
-        return project.xiaoqingwa
+        return project.auto_tract
     }
 
     static void setAutoClassFilter(List<AutoClassFilter> filter) {

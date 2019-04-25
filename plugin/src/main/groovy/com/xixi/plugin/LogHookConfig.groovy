@@ -11,7 +11,7 @@ public class LogHookConfig {
     /**
      * 日志采集埋点入口类
      */
-    public static final String LOG_ANALYTICS_BASE = "com/mmc/lamandys/liba_datapick/AutoTrackHelper"
+    public static String LOG_ANALYTICS_BASE = "com/brzhang/autotrackhelper/AutoTrackHelper"
 
 
     public final

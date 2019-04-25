@@ -107,6 +107,7 @@ public class AutoClassVisitor extends ClassVisitor {
         return methodVisitor
     }
 
+
     /**
      * 该方法是当扫描器完成类扫描时才会调用，如果想在类中追加某些方法，可以在该方法中实现。
      */
@@ -135,7 +136,7 @@ public class AutoClassVisitor extends ClassVisitor {
                 mv.visitInsn(Opcodes.RETURN)
                 mv.visitMaxs(methodCell.paramsCount, methodCell.paramsCount)
                 mv.visitEnd()
-                mv.visitAnnotation("Lcom/mmc/lamandys/liba_datapick/AutoDataInstrumented;", false)
+                mv.visitAnnotation("Lcom/brzhang/autotrackhelper/AutoDataInstrumented;", false)
             }
         }
         Logger.info("||---结束扫描类：${mClassName}\n")

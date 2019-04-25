@@ -1,25 +1,36 @@
-apply plugin: 'java'
+apply plugin: 'com.android.library'
 apply plugin: 'maven'
-apply plugin: 'groovy'
+android {
+    compileSdkVersion 28
 
-repositories {
-    maven {
-        url "http://maven.oa.com/nexus/content/groups/androidbuild"
+    defaultConfig {
+        minSdkVersion 18
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
     }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
 }
 
 dependencies {
-    implementation gradleApi()
-    implementation localGroovy()
-    implementation 'org.ow2.asm:asm:6.0'
-    implementation 'org.ow2.asm:asm-commons:6.0'
-    implementation 'com.android.tools.build:gradle:3.0.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+
 }
+
 
 // 本地调试
 def groupId = 'com.tencent.tip'
-def version = '1.0.3'
-def artifactId = 'autotrack-gradle-plugin'
+def version = '1.0.1'
+def artifactId = 'autotrackhelper'
 //是否提交到仓库
 def uploadLocal = true
 
